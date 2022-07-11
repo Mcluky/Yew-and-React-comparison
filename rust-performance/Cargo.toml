@@ -1,0 +1,25 @@
+[package]
+name = "trunk-template"
+version = "0.1.0"
+edition = "2021"
+description = "Template for starting a Yew project using Trunk"
+readme = "README.md"
+repository = "https://github.com/yewstack/yew-trunk-minimal-template"
+license = "MIT OR Apache-2.0"
+keywords = ["yew", "trunk"]
+categories = ["gui", "wasm", "web-programming"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+yew = "0.19"
+js-sys = "0.3.58"
+wasm-bindgen = "0.2.81"
+cfg-if = "0.1" # Used to conditionally compile code, needed for logging
+log = "0.4.17"
+console_log = { version = "0.2", optional = true }
+getrandom = { version = "0.2", features = ["js"] }
+fake = { version = "2.5", features=['derive'] }
+rand = "0.8"
+
+[features]
+default = ["console_log"]
