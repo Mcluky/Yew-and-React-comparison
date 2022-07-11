@@ -6,7 +6,7 @@ use crate::model::company::Company;
 
 #[derive(Properties, PartialEq)]
 pub struct CompanyTableProperties {
-    pub companies: Rc<Vec<Company>>,
+    pub companies: Rc<Vec<Rc<Company>>>,
 }
 
 #[function_component(CompanyTable)]

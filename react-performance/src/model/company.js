@@ -31,11 +31,11 @@ export default class Company {
     /// The text is searched in the object's name, description, etc.
     /// The search is case insensitive.
     contains(text) {
-        return this.name.toLowerCase().includes(text.toLowerCase()) ||
-            this.catchPhrase.toLowerCase().includes(text.toLowerCase()) ||
-            this.industry.toLowerCase().includes(text.toLowerCase()) ||
-            this.phoneNumber.toLowerCase().includes(text.toLowerCase()) ||
-            this.email.toLowerCase().includes(text.toLowerCase()) ||
-            this.ipv4.toLowerCase().includes(text.toLowerCase());
+        return this.name.toLowerCase().includes(text) ||
+            this.catchPhrase.toLowerCase().includes(text) ||
+            this.industry.toLowerCase().includes(text) ||
+            this.phoneNumber.toLowerCase().includes(text) ||
+            this.email.toLowerCase().includes(text) ||
+            this.ipv4.toLowerCase().includes(text);
     }
 }

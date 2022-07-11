@@ -4,7 +4,7 @@ use fake::faker::internet::en::*;
 use fake::faker::phone_number::en::*;
 use crate::extensions::search_text_filterable_trait::SearchTextFilterable;
 
-#[derive(Debug, Dummy, PartialEq, Clone)]
+#[derive(Debug, Dummy, PartialEq)]
 pub struct Company {
     #[dummy(faker = "CompanyName()")]
     pub name: String,

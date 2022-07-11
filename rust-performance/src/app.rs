@@ -11,8 +11,8 @@ use crate::model::company::Company;
 use crate::extensions::wasm_time::Instant;
 
 pub struct App {
-    company_data: Rc<Vec<Company>>,
-    company_data_filtered: Rc<Vec<Company>>,
+    company_data: Rc<Vec<Rc<Company>>>,
+    company_data_filtered: Rc<Vec<Rc<Company>>>,
     search_text: String,
     amount_of_data: i32,
     last_required_time_for_search: Duration,
@@ -48,10 +48,10 @@ impl Component for App {
                 let mut new_company_data = vec![];
                 for _i in 0..amount_of_data {
                     let new_company: Company = Faker::fake(&Faker);
-                    new_company_data.push(new_company);
+                    new_company_data.push(Rc::from(new_company));
                 }
-                self.company_data = Rc::from(new_company_data);
-                self.company_data_filtered = Rc::from(self.company_data.clone());
+                self.company_data = Rc::from(new_company_data.clone());
+                self.company_data_filtered = Rc::from(new_company_data.clone());
                 self.search_text = String::default();
                 true
             }
@@ -60,17 +60,20 @@ impl Component for App {
                 self.search_text = search_text;
                 let case_insensitive_search_text = self.search_text.to_lowercase();
 
-                self.company_data_filtered = Rc::from({
-                    let now = Instant::now();
-                    let filtered = self.company_data
-                        .iter()
-                        .filter(|company| company.contains(&case_insensitive_search_text))
-                        .cloned()
-                        .collect::<Vec<Company>>();
-                    info!("Searching took: {:?}", now.elapsed());
-                    self.last_required_time_for_search = now.elapsed();
-                    filtered
-                });
+                // Start measuring time
+                let now = Instant::now();
+
+                let mut new_company_data_filtered = vec![];
+                for company in self.company_data.iter() {
+                    if company.contains(&case_insensitive_search_text) {
+                        new_company_data_filtered.push(company.clone());
+                    }
+                }
+                self.company_data_filtered = Rc::from(new_company_data_filtered);
+
+                // Stop measuring time
+                self.last_required_time_for_search = now.elapsed();
+                info!("Searching took: {:?}", self.last_required_time_for_search);
                 true
             }
         }
