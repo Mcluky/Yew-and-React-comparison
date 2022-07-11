@@ -18,7 +18,7 @@ pub struct Company {
     #[dummy(faker = "PhoneNumber()")]
     pub phone_number: String,
 
-    #[dummy(faker = "SafeEmail()")]
+    #[dummy(faker = "FreeEmail()")]
     pub email: String,
 
     #[dummy(faker = "IPv4()")]
